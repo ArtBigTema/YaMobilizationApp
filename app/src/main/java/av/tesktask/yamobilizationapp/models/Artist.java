@@ -16,6 +16,21 @@ public class Artist implements Comparable<Artist> {
     private String bigCover;
     private String smallCover;
 
+    public Artist(long id, String name, String[] genres, int tracks, int albums, int link, int description) {
+        this.id = id;
+        this.name = name;
+        this.genres = genres;
+        this.tracks = tracks;
+        this.albums = albums;
+        this.link = link;
+        this.description = description;
+    }
+
+    public static Artist constructArtist() {//FIXME
+        return new Artist(System.currentTimeMillis(), String.valueOf(System.currentTimeMillis()), null, 0, 0, 0, 0);
+    }
+
+
     public long getId() {
         return id;
     }

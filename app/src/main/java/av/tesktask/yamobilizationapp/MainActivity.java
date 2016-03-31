@@ -1,11 +1,17 @@
 package av.tesktask.yamobilizationapp;
 
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.RecyclerView;
-        import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-        import butterknife.Bind;
-        import butterknife.ButterKnife;
+import java.util.ArrayList;
+import java.util.List;
+
+import av.tesktask.yamobilizationapp.models.Artist;
+import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,5 +23,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        List<Artist> artists = new ArrayList<>();
+        artists.add(Artist.constructArtist());
+        artists.add(Artist.constructArtist());
+        artists.add(Artist.constructArtist());
+        artists.add(Artist.constructArtist());
+        // artistList.add
+        artistList.setAdapter(new ArtistRVAdapter(artists));
+        artistList.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
