@@ -10,6 +10,7 @@ import java.util.List;
 
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
+import av.tesktask.yamobilizationapp.view.DividerItemDecoration;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostResume() {
+    protected void onPostResume() {//FIXME
         super.onPostResume();
         List<Artist> artists = new ArrayList<>();
         artists.add(Artist.constructArtist());
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         artists.add(Artist.constructArtist());
         // artistList.add
         artistList.setAdapter(new ArtistRVAdapter(artists));
+        artistList.addItemDecoration(new DividerItemDecoration(7));//FIXME
         artistList.setLayoutManager(new LinearLayoutManager(this));
     }
 

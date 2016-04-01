@@ -30,7 +30,6 @@ public class Artist implements Comparable<Artist> {
         return new Artist(System.currentTimeMillis(), String.valueOf(System.currentTimeMillis()), null, 0, 0, 0, 0);
     }
 
-
     public long getId() {
         return id;
     }
