@@ -3,6 +3,8 @@ package av.tesktask.yamobilizationapp.models;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import av.tesktask.yamobilizationapp.utils.Utils;
+
 /**
  * Created by Artem on 31.03.2016.
  */
@@ -46,7 +48,7 @@ public class Artist implements Comparable<Artist>, Serializable {
     }
 
     public String getGenresSingleLine() {
-        return Arrays.toString(genres);
+        return Arrays.toString(genres).replaceAll("[\\[\\]]", "").trim();
     }
 
     public int getTracks() {
@@ -55,6 +57,18 @@ public class Artist implements Comparable<Artist>, Serializable {
 
     public int getAlbums() {
         return albums;
+    }
+
+    public String getSummary() {
+        StringBuilder s = new StringBuilder();
+        s.append(getTracks());
+        s.append(" ");
+        s.append(Utils.wordCorrector(getTracks(), "альбом", "альбома", "альбомов"));//FIXME text
+        s.append(", ");
+        s.append(getAlbums());
+        s.append(" ");
+        s.append(Utils.wordCorrector(getAlbums(), "песня", "песни", "песен"));//FIXME text
+        return s.toString();
     }
 
     public String getLink() {

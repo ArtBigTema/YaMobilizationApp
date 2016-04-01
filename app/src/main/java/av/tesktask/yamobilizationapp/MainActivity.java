@@ -36,16 +36,6 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     @Override
-    protected void onPostResume() {//FIXME
-        super.onPostResume();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void doFinalActions(List<Artist> artists) {
         artistList.setAdapter(new ArtistRVAdapter(artists));
         artistList.setLayoutManager(new LinearLayoutManager(this));

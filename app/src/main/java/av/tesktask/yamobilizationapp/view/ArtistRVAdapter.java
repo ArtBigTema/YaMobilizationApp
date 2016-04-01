@@ -1,19 +1,25 @@
 package av.tesktask.yamobilizationapp.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
 
 import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
+
+import av.tesktask.yamobilizationapp.utils.Utils;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -37,19 +43,19 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     @Override
     public void onBindViewHolder(ArtistsViewHolder artistViewHolder, int position) {
+        Context c = artistViewHolder.image.getContext();
+
         Artist artist = list.get(position);
-        artistViewHolder.setName(artist.getName());//FIXME
-        artistViewHolder.setGenres(artist.getGenresSingleLine());//FIXME
-        artistViewHolder.setSummary(artist.getAlbums() + "," + artist.getTracks());//FIXME
+        artistViewHolder.setName(artist.getName());//FIXME single line
+        artistViewHolder.setGenres(artist.getGenresSingleLine());//FIXME single line
 
-        //FIXME
-      /*  Picasso.with(context)
-                .load(artist.getCover().getSmallCover())
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
-                .into(artistViewHolder.coverImageView);*/
+        artistViewHolder.setSummary(artist.getSummary());
 
-        //artistViewHolder.dateTime.setText(artist.get);
+        Picasso.with(c)
+                .load(artist.getSmallCover())
+                .error(R.drawable.error_drawable)
+                .placeholder(R.drawable.error_drawable)
+                .into(artistViewHolder.image);
     }
 
     @Override
@@ -64,6 +70,8 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
     public static class ArtistsViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
+        @Bind(R.id.iv_artist_small_photo)
+        ImageView image;
         @Bind(R.id.tv_artist_name)
         TextView name;
         @Bind(R.id.tv_artist_genres)
@@ -87,6 +95,10 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
         public void setSummary(String itemSummary) {
             summary.setText(itemSummary);
+        }
+
+        public void setDrawable(Drawable drawable) {
+            image.setImageDrawable(drawable);
         }
 
         @Override
