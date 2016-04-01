@@ -38,21 +38,18 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
     @Override
     public void onBindViewHolder(ArtistsViewHolder artistViewHolder, int position) {
         Artist artist = list.get(position);
-        artistViewHolder.setName(artist.getName());
-        artistViewHolder.setGenres(artist.getName());
-        artistViewHolder.setSummary(artist.getName());
+        artistViewHolder.setName(artist.getName());//FIXME
+        artistViewHolder.setGenres(artist.getGenresSingleLine());//FIXME
+        artistViewHolder.setSummary(artist.getAlbums() + "," + artist.getTracks());//FIXME
 
         //FIXME
       /*  Picasso.with(context)
-                .load(artist.getCover().getSmall())
+                .load(artist.getCover().getSmallCover())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(artistViewHolder.coverImageView);*/
 
         //artistViewHolder.dateTime.setText(artist.get);
-
-        // String artistSummary = artist.getAlbumsSummary(context) + ", " + artist.getTracksSummary(context);
-        // artistViewHolder.summaryTextView.setText(artistSummary);
     }
 
     @Override
@@ -94,7 +91,6 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
         @Override
         public void onClick(View v) {
-            Log.i("", "Listener");
             Toast.makeText(v.getContext(), getLayoutPosition() +
                     " clicked!", Toast.LENGTH_SHORT).show();//FIXME
         }
