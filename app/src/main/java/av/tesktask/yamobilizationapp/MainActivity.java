@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -12,6 +14,8 @@ import av.tesktask.yamobilizationapp.api.DownloadListener;
 import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
+
+import av.tesktask.yamobilizationapp.view.DividerItemDecoration;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -19,6 +23,9 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements DownloadListener {
     @Bind(R.id.rv_artists_list)
     RecyclerView artistList;
+
+    @Bind(R.id.pb_list)
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +38,22 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
 
     private void execute() {
         if (HttpApi.getInstance().isOnline(this)) {
+            progressBar.setVisibility(View.VISIBLE);
             HttpApi.getInstance().execute(this);
         }
     }
 
     @Override
     public void doFinalActions(List<Artist> artists) {
+        progressBar.setVisibility(View.GONE);
         artistList.setAdapter(new ArtistRVAdapter(artists));
+       // artistList.addItemDecoration(new DividerItemDecoration(7));
         artistList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     public void doErrorActions(String message) {
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();//FIXME
     }
 }

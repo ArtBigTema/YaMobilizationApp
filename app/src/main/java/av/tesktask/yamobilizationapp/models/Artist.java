@@ -1,14 +1,16 @@
 package av.tesktask.yamobilizationapp.models;
 
-import java.io.Serializable;
+import android.content.Context;
+
 import java.util.Arrays;
 
+import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.utils.Utils;
 
 /**
  * Created by Artem on 31.03.2016.
  */
-public class Artist implements Comparable<Artist>, Serializable {
+public class Artist implements Comparable<Artist> {
     private static String LOG_TAG = Artist.class.getName();
 
     private long id;
@@ -48,7 +50,7 @@ public class Artist implements Comparable<Artist>, Serializable {
     }
 
     public String getGenresSingleLine() {
-        return Arrays.toString(genres).replaceAll("[\\[\\]]", "").trim();
+        return Arrays.toString(genres).replaceAll("[\\[\\]]", "").trim();//FIXME if length == 0
     }
 
     public int getTracks() {
@@ -59,15 +61,19 @@ public class Artist implements Comparable<Artist>, Serializable {
         return albums;
     }
 
-    public String getSummary() {
+    public String getSummary(Context context) {
         StringBuilder s = new StringBuilder();
+
         s.append(getTracks());
         s.append(" ");
-        s.append(Utils.wordCorrector(getTracks(), "альбом", "альбома", "альбомов"));//FIXME text
+        s.append(context.getResources().getString(Utils.wordCorrector(getTracks(),
+                R.string.artist_song_single, R.string.artist_song_few, R.string.artist_song_many)));
         s.append(", ");
         s.append(getAlbums());
         s.append(" ");
-        s.append(Utils.wordCorrector(getAlbums(), "песня", "песни", "песен"));//FIXME text
+        s.append(context.getResources().getString(Utils.wordCorrector(getAlbums(),
+                R.string.artist_album_single, R.string.artist_album_few, R.string.artist_album_many)));
+
         return s.toString();
     }
 

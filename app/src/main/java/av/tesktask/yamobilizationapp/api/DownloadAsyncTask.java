@@ -80,7 +80,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
             if (message.isEmpty()) {
                 downloadListener.doFinalActions(artists);
             } else {
-                downloadListener.doErrorActions("");
+                downloadListener.doErrorActions(message);//FIXME
             }
         }
     }

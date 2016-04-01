@@ -18,8 +18,6 @@ import java.util.List;
 import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
 
-import av.tesktask.yamobilizationapp.utils.Utils;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,35 +25,37 @@ import butterknife.ButterKnife;
  * Created by Artem on 31.03.2016.
  */
 public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.ArtistsViewHolder> {
-    private List<Artist> list = Collections.emptyList();
+    private List<Artist> list = Collections.emptyList();//FIXME rename
+    private final int LAYOUT = R.layout.cv_item;
 
     public ArtistRVAdapter(List<Artist> artistList) {
         this.list = artistList;
+        Collections.sort(list);
     }
 
     @Override
     public ArtistsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemLayoutView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.cv_item, null);
+                .inflate(LAYOUT, null);
         ArtistsViewHolder viewHolder = new ArtistsViewHolder(itemLayoutView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ArtistsViewHolder artistViewHolder, int position) {
-        Context c = artistViewHolder.image.getContext();
+        Context context = artistViewHolder.imageView.getContext();
 
         Artist artist = list.get(position);
-        artistViewHolder.setName(artist.getName());//FIXME single line
-        artistViewHolder.setGenres(artist.getGenresSingleLine());//FIXME single line
+        artistViewHolder.setName(artist.getName());
+        artistViewHolder.setGenres(artist.getGenresSingleLine());
 
-        artistViewHolder.setSummary(artist.getSummary());
+        artistViewHolder.setSummary(artist.getSummary(context));
 
-        Picasso.with(c)
+        Picasso.with(context)
                 .load(artist.getSmallCover())
                 .error(R.drawable.error_drawable)
                 .placeholder(R.drawable.error_drawable)
-                .into(artistViewHolder.image);
+                .into(artistViewHolder.imageView);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
             implements View.OnClickListener {
 
         @Bind(R.id.iv_artist_small_photo)
-        ImageView image;
+        ImageView imageView;
         @Bind(R.id.tv_artist_name)
         TextView name;
         @Bind(R.id.tv_artist_genres)
@@ -95,10 +95,6 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
         public void setSummary(String itemSummary) {
             summary.setText(itemSummary);
-        }
-
-        public void setDrawable(Drawable drawable) {
-            image.setImageDrawable(drawable);
         }
 
         @Override

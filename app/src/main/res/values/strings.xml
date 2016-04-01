@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">YaMobilizationApp</string>
+
+    <string name="artist_album_many">альбомов</string>
+    <string name="artist_album_few">альбома</string>
+    <string name="artist_album_single">альбом</string>
+
+    <string name="artist_song_many">песен</string>
+    <string name="artist_song_few">песни</string>
+    <string name="artist_song_single">песня</string>
 </resources>
