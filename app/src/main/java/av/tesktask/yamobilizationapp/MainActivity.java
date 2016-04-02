@@ -1,5 +1,6 @@
 package av.tesktask.yamobilizationapp;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,7 @@ import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
 
-import av.tesktask.yamobilizationapp.view.DividerItemDecoration;
+import av.tesktask.yamobilizationapp.view.InternetAlertDialog;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -40,20 +41,31 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         if (HttpApi.getInstance().isOnline(this)) {
             progressBar.setVisibility(View.VISIBLE);
             HttpApi.getInstance().execute(this);
+        } else {
+            showAlertDialog(getString(R.string.dialog_internet_is_off));
         }
     }
 
     @Override
     public void doFinalActions(List<Artist> artists) {
-        progressBar.setVisibility(View.GONE);
+        turnOfProgressBar();
         artistList.setAdapter(new ArtistRVAdapter(artists));
-       // artistList.addItemDecoration(new DividerItemDecoration(7));
+        // artistList.addItemDecoration(new DividerItemDecoration(7));
         artistList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     public void doErrorActions(String message) {
+        turnOfProgressBar();
+        showAlertDialog(getString(R.string.dialog_internet_unavailable));
+    }
+
+    private void turnOfProgressBar() {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();//FIXME
+    }
+
+    private void showAlertDialog(String message) {
+        InternetAlertDialog dialog = new InternetAlertDialog(this, message);
+        dialog.show();
     }
 }
