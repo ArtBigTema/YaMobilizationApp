@@ -19,13 +19,13 @@ public class DetailActivity extends AppCompatActivity {
     private Artist artist;
 
     @Bind(R.id.iv_artist_big_photo)
-    ImageView imageView;
+    protected ImageView imageView;
     @Bind(R.id.tv_artist_genres)
-    TextView genres;
+    protected TextView genres;
     @Bind(R.id.tv_artist_summary)
-    TextView summary;
+    protected TextView summary;
     @Bind(R.id.tv_artist_description)
-    TextView description;
+    protected TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

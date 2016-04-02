@@ -62,13 +62,13 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
         private Artist artist;//TODO remove if need
 
         @Bind(R.id.iv_artist_small_photo)
-        ImageView imageView;
+        protected ImageView imageView;
         @Bind(R.id.tv_artist_name)
-        TextView name;
+        protected TextView name;
         @Bind(R.id.tv_artist_genres)
-        TextView genres;
+        protected TextView genres;
         @Bind(R.id.tv_artist_summary)
-        TextView summary;
+        protected TextView summary;
 
         public ArtistsViewHolder(View itemView) {
             super(itemView);

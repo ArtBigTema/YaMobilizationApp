@@ -15,16 +15,17 @@ import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
 
 import av.tesktask.yamobilizationapp.view.InternetAlertDialog;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity implements DownloadListener {
     @Bind(R.id.rv_artists_list)
-    RecyclerView artistList;
+    protected RecyclerView artistList;
 
     @Bind(R.id.pb_list)
-    ProgressBar progressBar;
+    protected ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
