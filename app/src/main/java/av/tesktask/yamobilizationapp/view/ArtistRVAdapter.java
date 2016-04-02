@@ -1,20 +1,20 @@
 package av.tesktask.yamobilizationapp.view;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
 
+import av.tesktask.yamobilizationapp.DetailActivity;
 import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
 
@@ -99,8 +99,8 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), getLayoutPosition() +
-                    " clicked!", Toast.LENGTH_SHORT).show();//FIXME
+            Intent intent = new Intent(v.getContext(), DetailActivity.class);
+            v.getContext().startActivity(intent);
         }
     }
 }

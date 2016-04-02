@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_artist_small_photo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/big_imageview_height"
+        android:maxHeight="@dimen/big_imageview_height"
+        android:src="@drawable/error_drawable" />
+
+    <TextView
+        android:id="@+id/tv_artist_genres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="genres"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_cardview_genres" />
+
+    <TextView
+        android:id="@+id/tv_artist_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="summary"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_cardview_summary" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:scrollbars="vertical"
+        android:text="tv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_description"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_cardview_name" />
+
+</LinearLayout>
