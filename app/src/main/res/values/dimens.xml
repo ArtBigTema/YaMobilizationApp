@@ -4,7 +4,7 @@
     <dimen name="small_imageview_height">100dp</dimen>
 
     <dimen name="big_imageview_width">200dp</dimen>
-    <dimen name="big_imageview_height">200dp</dimen>
+    <dimen name="big_imageview_height">100dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_cardview_name">20sp</dimen>

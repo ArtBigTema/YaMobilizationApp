@@ -13,7 +13,7 @@
         style="@style/Base.Widget.AppCompat.ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@android:color/white"
         android:indeterminate="true"
         android:visibility="gone" />
 
