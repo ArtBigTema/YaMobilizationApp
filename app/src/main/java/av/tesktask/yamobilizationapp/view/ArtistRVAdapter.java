@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -30,7 +31,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     public ArtistRVAdapter(List<Artist> artistList) {
         this.list = artistList;
-        Collections.sort(list);
+        //   Collections.sort(list);
     }
 
     @Override
@@ -43,19 +44,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     @Override
     public void onBindViewHolder(ArtistsViewHolder artistViewHolder, int position) {
-        Context context = artistViewHolder.imageView.getContext();
-
-        Artist artist = list.get(position);
-        artistViewHolder.setName(artist.getName());
-        artistViewHolder.setGenres(artist.getGenresSingleLine());
-
-        artistViewHolder.setSummary(artist.getSummary(context));
-
-        Picasso.with(context)
-                .load(artist.getSmallCover())
-                .error(R.drawable.error_drawable)
-                .placeholder(R.drawable.error_drawable)
-                .into(artistViewHolder.imageView);
+        artistViewHolder.setData(list.get(position));
     }
 
     @Override
@@ -69,6 +58,8 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     public static class ArtistsViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+        private Context context;
+        private Artist artist;//TODO remove if need
 
         @Bind(R.id.iv_artist_small_photo)
         ImageView imageView;
@@ -81,8 +72,25 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
         public ArtistsViewHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+        }
+
+        public void setData(Artist artist) {
+            this.artist = artist;
+            setName(artist.getName());
+
+            setGenres(artist.getGenresSingleLine());
+            setSummary(artist.getSummary(context,
+                    context.getString(R.string.divider_item_list_summary) + " "));
+
+            Picasso.with(context)
+                    .load(artist.getSmallCover())
+                    .fit().centerCrop()
+                    .error(R.drawable.error_drawable)
+                    .placeholder(R.drawable.error_drawable)
+                    .into(imageView);
         }
 
         public void setName(String itemName) {
@@ -100,6 +108,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), DetailActivity.class);
+            intent.putExtra(Artist.class.getName(), (new Gson()).toJson(artist));//TODO
             v.getContext().startActivity(intent);
         }
     }

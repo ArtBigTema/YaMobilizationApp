@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="2.2"
     tools:context=".DetailActivity">
 
     <ImageView
-        android:id="@+id/iv_artist_small_photo"
+        android:id="@+id/iv_artist_big_photo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/big_imageview_height"
-        android:maxHeight="@dimen/big_imageview_height"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_weight="1.1"
         android:src="@drawable/error_drawable" />
 
     <TextView
@@ -20,7 +22,6 @@
         android:layout_marginLeft="@dimen/margin_normal"
         android:layout_marginRight="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
-        android:text="genres"
         android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/font_cardview_genres" />
 
@@ -31,20 +32,25 @@
         android:layout_marginLeft="@dimen/margin_normal"
         android:layout_marginRight="@dimen/margin_normal"
         android:layout_marginTop="@dimen/margin_normal"
-        android:text="summary"
         android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/font_cardview_summary" />
 
-    <TextView
-        android:id="@+id/tv_description"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_normal"
-        android:layout_marginRight="@dimen/margin_normal"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:scrollbars="vertical"
-        android:text="tv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_descriptiontv_artist_description"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/font_cardview_name" />
+        android:layout_height="match_parent"
+        android:layout_weight="1.1">
 
+        <TextView
+            android:id="@+id/tv_artist_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:lineSpacingMultiplier="1.4"
+            android:scrollbars="vertical"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_detail_description"
+            android:typeface="serif" />
+    </ScrollView>
 </LinearLayout>

@@ -61,19 +61,18 @@ public class Artist implements Comparable<Artist> {
         return albums;
     }
 
-    public String getSummary(Context context) {
+    public String getSummary(Context context, String divider) {
         StringBuilder s = new StringBuilder();
 
-        s.append(getTracks());
-        s.append(" ");
-        s.append(context.getResources().getString(Utils.wordCorrector(getTracks(),
-                R.string.artist_song_single, R.string.artist_song_few, R.string.artist_song_many)));
-        s.append(", ");
         s.append(getAlbums());
         s.append(" ");
         s.append(context.getResources().getString(Utils.wordCorrector(getAlbums(),
                 R.string.artist_album_single, R.string.artist_album_few, R.string.artist_album_many)));
-
+        s.append(divider);
+        s.append(getTracks());
+        s.append(" ");
+        s.append(context.getResources().getString(Utils.wordCorrector(getTracks(),
+                R.string.artist_song_single, R.string.artist_song_few, R.string.artist_song_many)));
         return s.toString();
     }
 
