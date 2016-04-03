@@ -1,11 +1,12 @@
 package av.tesktask.yamobilizationapp;
 
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.os.Bundle;
 
 import java.util.List;
 
@@ -27,12 +28,19 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     @Bind(R.id.pb_list)
     protected ProgressBar progressBar;
 
+    @Bind(R.id.app_toolbar)
+    protected Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (toolbar != null) {
+            toolbar.setTitle(getString(R.string.activity_main_name));
+            setSupportActionBar(toolbar);
+        }
         execute();
     }
 

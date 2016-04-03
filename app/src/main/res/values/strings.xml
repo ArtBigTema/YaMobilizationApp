@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">YaMobilizationApp</string>
 
-    <string name="activity_main_name">YaMobilizationApp</string>
+    <string name="activity_main_name">Исполнители</string>
 
     <string name="divider_item_list_summary">, </string>
     <string name="divider_item_detail_summary">•</string>

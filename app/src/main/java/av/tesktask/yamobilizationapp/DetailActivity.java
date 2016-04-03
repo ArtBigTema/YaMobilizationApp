@@ -1,7 +1,9 @@
 package av.tesktask.yamobilizationapp;
 
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,18 +22,30 @@ public class DetailActivity extends AppCompatActivity {
 
     @Bind(R.id.iv_artist_big_photo)
     protected ImageView imageView;
+
     @Bind(R.id.tv_artist_genres)
     protected TextView genres;
+
     @Bind(R.id.tv_artist_summary)
     protected TextView summary;
+
     @Bind(R.id.tv_artist_description)
     protected TextView description;
+
+    @Bind(R.id.app_toolbar)
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
 
         if (this.getIntent().getExtras() != null) {
             if (this.getIntent().getExtras().containsKey(Artist.class.getName())) {
@@ -41,12 +55,25 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void parseJson(String json) {
         Gson gson = new GsonBuilder().create();
         artist = gson.fromJson(json, Artist.class);
     }
 
     private void setData() {
+        getSupportActionBar().setTitle(artist.getName());
+
         genres.setText(artist.getGenresSingleLine());
         summary.setText(artist.getSummary(this,
                 " " + getString(R.string.divider_item_detail_summary) + " "));

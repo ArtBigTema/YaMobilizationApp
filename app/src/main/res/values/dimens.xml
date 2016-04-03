@@ -11,6 +11,7 @@
     <dimen name="font_cardview_genres">15sp</dimen>
     <dimen name="font_cardview_summary">14sp</dimen>
     <dimen name="font_detail_description">15sp</dimen>
+    <dimen name="font_toolbar">20sp</dimen>
 
     <!-- typical spacing or padding between two views -->
     <dimen name="spacing_normal">16dp</dimen>
