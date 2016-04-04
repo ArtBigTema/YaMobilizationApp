@@ -5,17 +5,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
+import av.tesktask.yamobilizationapp.utils.Utils;
 
 /**
  * Created by Artem on 01.04.2016.
  */
 public class HttpApi {
     private static volatile HttpApi instance;
-
-    private HttpApi() {
-
-    }
 
     public static HttpApi getInstance() {
         HttpApi localInstance = instance;
@@ -37,8 +40,25 @@ public class HttpApi {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public void execute(DownloadListener downloadListener) {
-        DownloadAsyncTask downloadAsyncTask = new DownloadAsyncTask(downloadListener);
+    public boolean fileIsExist(Context context) {
+        return FileController.fileIsExist(context);
+    }
+
+    public ArrayList<Artist> readFromFile(Context context) {
+        try {
+            return Utils.parseArtists(FileController.readArtistsListFromFile(context));
+        } catch (JSONException e) {
+            e.printStackTrace();//FIXME
+        } catch (IOException e) {
+            e.printStackTrace();//FIXME
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();//FIXME
+        }
+        return null;
+    }
+
+    public void execute(DownloadListener downloadListener, Context context) {
+        DownloadAsyncTask downloadAsyncTask = new DownloadAsyncTask(downloadListener, context);
         downloadAsyncTask.execute(getUri());
     }
 

@@ -1,5 +1,6 @@
 package av.tesktask.yamobilizationapp.api;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import av.tesktask.yamobilizationapp.models.Artist;
 
+import av.tesktask.yamobilizationapp.utils.Utils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -27,25 +29,28 @@ import okhttp3.Response;
  */
 public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
     private DownloadListener downloadListener;
+    private Context context;
     private String errorMessage = "";
     private List<Artist> artists = Collections.emptyList();
+    private OkHttpClient client;
 
-    public DownloadAsyncTask(DownloadListener downloadListener) {
+    public DownloadAsyncTask(DownloadListener downloadListener, Context context) {
         this.downloadListener = downloadListener;
+        this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
+        client = new OkHttpClient.
+                Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .build();
     }
 
     @Override
     protected Void doInBackground(String... params) {
-        OkHttpClient client = new OkHttpClient.
-                Builder()
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .build();
-
         Request request = new Request.Builder()
                 .url(params[0])
                 .build();
@@ -54,7 +59,10 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
         try {
             responses = client.newCall(request).execute();
             if (responses.isSuccessful()) {
-                parseArtists(responses.body().string());
+                String json = responses.body().string();
+
+                FileController.writeArtistsListToFile(context, json);//TODO remove if need
+                parseArtists(json);
             } else {
                 errorMessage = responses.message();
             }
@@ -68,14 +76,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
 
     private void parseArtists(String json) {
         try {
-            JSONArray jsonArray = new JSONArray(json);
-            artists = new ArrayList<>(jsonArray.length());
-
-            Gson gson = new GsonBuilder().create();
-            Type listType = new TypeToken<List<Artist>>() {
-            }.getType();
-
-            artists = gson.fromJson(json, listType);
+            artists = Utils.parseArtists(json);
         } catch (JSONException jsonError) {
             errorMessage = jsonError.getMessage();
             jsonError.printStackTrace();//TODO to log.d

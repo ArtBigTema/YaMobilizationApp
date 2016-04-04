@@ -46,24 +46,35 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     private void execute() {
         if (HttpApi.getInstance().isOnline(this)) {
             progressBar.setVisibility(View.VISIBLE);
-            HttpApi.getInstance().execute(this);
+            HttpApi.getInstance().execute(this, getApplicationContext());
         } else {
-            showAlertDialog(getString(R.string.dialog_internet_is_off));
+            if (HttpApi.getInstance().fileIsExist(this)) {
+                onSuccess(HttpApi.getInstance().readFromFile(this));
+            } else {
+                showAlertDialog(getString(R.string.dialog_internet_is_off));
+            }
         }
     }
 
     @Override
     public void onSuccess(List<Artist> artists) {
         turnOfProgressBar();
-        artistList.setAdapter(new ArtistRVAdapter(artists));
-        // artistList.addItemDecoration(new DividerItemDecoration(7));
-        artistList.setLayoutManager(new LinearLayoutManager(this));
+        if (artists != null) {
+            artistList.setAdapter(new ArtistRVAdapter(artists));
+            // artistList.addItemDecoration(new DividerItemDecoration(7));
+            artistList.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
     @Override
     public void onError(String message) {
         turnOfProgressBar();
-        showAlertDialog(getString(R.string.dialog_internet_unavailable));
+
+        if (HttpApi.getInstance().fileIsExist(this)) {
+            onSuccess(HttpApi.getInstance().readFromFile(this));
+        } else {
+            showAlertDialog(getString(R.string.dialog_internet_unavailable));
+        }
     }
 
     private void turnOfProgressBar() {
