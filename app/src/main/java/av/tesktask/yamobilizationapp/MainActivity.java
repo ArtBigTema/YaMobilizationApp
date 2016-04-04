@@ -14,7 +14,6 @@ import av.tesktask.yamobilizationapp.api.DownloadListener;
 import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
-
 import av.tesktask.yamobilizationapp.view.InternetAlertDialog;
 
 import butterknife.Bind;
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     @Override
-    public void doFinalActions(List<Artist> artists) {
+    public void onSuccess(List<Artist> artists) {
         turnOfProgressBar();
         artistList.setAdapter(new ArtistRVAdapter(artists));
         // artistList.addItemDecoration(new DividerItemDecoration(7));
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     @Override
-    public void doErrorActions(String message) {
+    public void onError(String message) {
         turnOfProgressBar();
         showAlertDialog(getString(R.string.dialog_internet_unavailable));
     }

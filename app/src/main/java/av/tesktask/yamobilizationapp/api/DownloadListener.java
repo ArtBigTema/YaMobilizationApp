@@ -9,7 +9,7 @@ import av.tesktask.yamobilizationapp.models.Artist;
  */
 public interface DownloadListener {//FIXME
 
-    public void doFinalActions(List<Artist> artists);
+    void onSuccess(List<Artist> artists);
 
-    public void doErrorActions(String message);
+    void onError(String message);
 }

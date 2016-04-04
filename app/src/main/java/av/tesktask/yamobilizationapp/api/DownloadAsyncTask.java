@@ -78,7 +78,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
             artists = gson.fromJson(json, listType);
         } catch (JSONException jsonError) {
             errorMessage = jsonError.getMessage();
-            jsonError.printStackTrace();
+            jsonError.printStackTrace();//TODO to log.d
         }
     }
 
@@ -87,9 +87,9 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
         super.onPostExecute(aVoid);
         if (downloadListener != null) {
             if (errorMessage.isEmpty()) {
-                downloadListener.doFinalActions(artists);
+                downloadListener.onSuccess(artists);
             } else {
-                downloadListener.doErrorActions(errorMessage);//FIXME
+                downloadListener.onError(errorMessage);//FIXME
             }
         }
     }
