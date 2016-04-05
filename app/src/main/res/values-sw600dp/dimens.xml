@@ -1,0 +1,22 @@
+<resources>
+    <!-- dimens for small ImageView -->
+    <dimen name="small_imageview_width">200dp</dimen>
+    <dimen name="small_imageview_height">200dp</dimen>
+
+    <dimen name="big_imageview_width">300dp</dimen>
+    <dimen name="big_imageview_height">230dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_cardview_name">27sp</dimen>
+    <dimen name="font_cardview_genres">25sp</dimen>
+    <dimen name="font_cardview_summary">24sp</dimen>
+    <dimen name="font_detail_description">25sp</dimen>
+    <dimen name="font_toolbar">30sp</dimen>
+
+    <!-- typical spacing or padding between two views -->
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_big">20dp</dimen>
+</resources>
