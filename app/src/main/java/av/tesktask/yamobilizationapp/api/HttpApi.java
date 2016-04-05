@@ -17,7 +17,7 @@ import av.tesktask.yamobilizationapp.utils.Utils;
 /**
  * Created by Artem on 01.04.2016.
  */
-public class HttpApi {
+public class HttpApi {//TODO rename
     private static volatile HttpApi instance;
 
     public static HttpApi getInstance() {
@@ -46,7 +46,8 @@ public class HttpApi {
 
     public ArrayList<Artist> readFromFile(Context context) {
         try {
-            return Utils.parseArtists(FileController.readArtistsListFromFile(context));
+            return Utils.parseArtists(
+                    FileController.readJsonFromFile(context).toString());
         } catch (JSONException e) {
             e.printStackTrace();//FIXME
         } catch (IOException e) {

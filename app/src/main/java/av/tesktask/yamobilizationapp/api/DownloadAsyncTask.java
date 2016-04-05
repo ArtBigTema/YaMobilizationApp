@@ -3,16 +3,9 @@ package av.tesktask.yamobilizationapp.api;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -61,12 +54,17 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
             if (responses.isSuccessful()) {
                 String json = responses.body().string();
 
-                FileController.writeArtistsListToFile(context, json);//TODO remove if need
+                FileController.writeJsonToFileIfNeed(context, json);//TODO remove if need
+
                 parseArtists(json);
             } else {
                 errorMessage = responses.message();
             }
         } catch (IOException e) {
+            errorMessage = e.getMessage();
+            e.printStackTrace();//FIXME
+            return null;
+        } catch (ClassNotFoundException e) {
             errorMessage = e.getMessage();
             e.printStackTrace();//FIXME
             return null;

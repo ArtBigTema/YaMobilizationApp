@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     @Override
     public void onSuccess(List<Artist> artists) {
         turnOfProgressBar();
-        if (artists != null) {
+        if (artists != null) {//FIXME if size == 0
             artistList.setAdapter(new ArtistRVAdapter(artists));
             // artistList.addItemDecoration(new DividerItemDecoration(7));
             artistList.setLayoutManager(new LinearLayoutManager(this));

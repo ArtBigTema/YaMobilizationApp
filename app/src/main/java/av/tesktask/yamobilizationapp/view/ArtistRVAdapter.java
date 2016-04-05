@@ -49,7 +49,11 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        } else {
+            return 0;
+        }
     }
 
     public void updateData(List<Artist> newArtists) {
