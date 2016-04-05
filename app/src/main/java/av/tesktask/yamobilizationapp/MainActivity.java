@@ -1,5 +1,9 @@
 package av.tesktask.yamobilizationapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +18,14 @@ import av.tesktask.yamobilizationapp.api.DownloadListener;
 import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
-import av.tesktask.yamobilizationapp.view.InternetAlertDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity implements DownloadListener {
+    private AlertDialog alertDialog;
+
     @Bind(R.id.rv_artists_list)
     protected RecyclerView artistList;
 
@@ -36,30 +41,50 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setToolbar();
+    }
+
+    private void setToolbar() {
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.activity_main_name));
             setSupportActionBar(toolbar);
         }
-        execute();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (artistList.getVisibility() == View.GONE) {
+            execute();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dismissAlertDialog();
     }
 
     private void execute() {
         if (HttpApi.getInstance().isOnline(this)) {
-            progressBar.setVisibility(View.VISIBLE);
+            turnOnProgressBar();
             HttpApi.getInstance().execute(this, getApplicationContext());
         } else {
             if (HttpApi.getInstance().fileIsExist(this)) {
+                turnOnProgressBar();
                 onSuccess(HttpApi.getInstance().readFromFile(this));
             } else {
-                showAlertDialog(getString(R.string.dialog_internet_is_off));
+                showAlertDialogForActivateWIFI();
             }
         }
     }
 
     @Override
     public void onSuccess(List<Artist> artists) {
-        turnOfProgressBar();
+        turnOffProgressBar();
+        dismissAlertDialog();
         if (artists != null) {//FIXME if size == 0
+            artistList.setVisibility(View.VISIBLE);
             artistList.setAdapter(new ArtistRVAdapter(artists));
             // artistList.addItemDecoration(new DividerItemDecoration(7));
             artistList.setLayoutManager(new LinearLayoutManager(this));
@@ -68,21 +93,75 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
 
     @Override
     public void onError(String message) {
-        turnOfProgressBar();
+        turnOffProgressBar();
 
         if (HttpApi.getInstance().fileIsExist(this)) {
             onSuccess(HttpApi.getInstance().readFromFile(this));
         } else {
-            showAlertDialog(getString(R.string.dialog_internet_unavailable));
+            showAlertDialogForReTryDownload(message);
         }
     }
 
-    private void turnOfProgressBar() {
+    private void turnOnProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void turnOffProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
 
-    private void showAlertDialog(String message) {
-        InternetAlertDialog dialog = new InternetAlertDialog(this, message);
-        dialog.show();
+    private void showAlertDialogForActivateWIFI() {
+        dismissAlertDialog();
+
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage(getString(R.string.dialog_internet_and_file_unavailable));
+        alertDialog.setCancelable(false);
+
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,
+                getString(R.string.dialog_goto_setting),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismissAlertDialog();
+                        MainActivity.this.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                });
+
+        showAlertDialog();
+    }
+
+    private void showAlertDialogForReTryDownload(String message) {
+        dismissAlertDialog();
+
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage(message);
+        alertDialog.setCancelable(false);
+
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,
+                getString(R.string.dialog_retry_button),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismissAlertDialog();
+                        execute();
+                    }
+                });
+
+        showAlertDialog();
+    }
+
+    private void showAlertDialog() {
+        if (alertDialog != null) {
+            if (alertDialog.isShowing()) {
+                alertDialog.dismiss();
+            }
+            alertDialog.show();
+        }
+    }
+
+    private void dismissAlertDialog() {
+        if (alertDialog != null) {
+            alertDialog.dismiss();
+        }
     }
 }
