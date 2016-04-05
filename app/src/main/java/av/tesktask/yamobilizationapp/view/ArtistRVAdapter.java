@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import av.tesktask.yamobilizationapp.DetailActivity;
-import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
+import av.tesktask.yamobilizationapp.utils.Constants;
+import av.tesktask.yamobilizationapp.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,8 +32,19 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
     private final int LAYOUT = R.layout.cv_item;
 
     public ArtistRVAdapter(List<Artist> artistList) {
-        this.list = artistList;
+        // this.list = artistList;
+        list = filterByGenre(artistList, Constants.FILTERED_BY_GENRE);
         //   Collections.sort(list);
+    }
+
+    private List<Artist> filterByGenre(List<Artist> artistList, String genre) {
+        List<Artist> filtered = new ArrayList<>();
+        for (Artist artist : artistList) {
+            if (artist.containsGenre(genre)) {
+                filtered.add(artist);
+            }
+        }
+        return filtered;
     }
 
     @Override

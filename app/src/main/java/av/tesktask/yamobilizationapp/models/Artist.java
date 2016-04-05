@@ -33,10 +33,6 @@ public class Artist implements Comparable<Artist> {
         this.cover = cover;
     }
 
-    public static Artist constructArtist() {//FIXME
-        return new Artist(System.currentTimeMillis(), String.valueOf(System.currentTimeMillis()), null, 0, 0, "", "", null);
-    }
-
     public long getId() {
         return id;
     }
@@ -45,12 +41,12 @@ public class Artist implements Comparable<Artist> {
         return name;
     }
 
-    public String[] getGenres() {
-        return genres;
-    }
-
     public String getGenresSingleLine() {
         return Arrays.toString(genres).replaceAll("[\\[\\]]", "").trim();//FIXME if length == 0
+    }
+
+    public boolean containsGenre(String genre) {
+        return Arrays.asList(genres).contains(genre);
     }
 
     public int getTracks() {

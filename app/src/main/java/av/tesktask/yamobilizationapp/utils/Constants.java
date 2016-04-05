@@ -11,4 +11,6 @@ public class Constants {
     public static final String JSON = "a +fr +ft +fi +fs +ft +fs +f. +fj +fs +fo +fn";
 
     public static final String JSON_FILE = "artist.json";
+
+    public static final String FILTERED_BY_GENRE = "pop";
 }
