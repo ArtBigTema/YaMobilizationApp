@@ -18,9 +18,9 @@ import java.util.List;
 import av.tesktask.yamobilizationapp.activity.DetailActivity;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
+import av.tesktask.yamobilizationapp.utils.Utils;
 import av.tesktask.yamobilizationapp.R;
 
-import av.tesktask.yamobilizationapp.utils.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

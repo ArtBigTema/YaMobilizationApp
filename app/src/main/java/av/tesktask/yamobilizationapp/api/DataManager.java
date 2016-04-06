@@ -16,21 +16,18 @@ import av.tesktask.yamobilizationapp.utils.Utils;
 /**
  * Created by Artem on 01.04.2016.
  */
-public class HttpApi {//TODO rename
-    private static final String TAG = HttpApi.class.getSimpleName();
-    private static volatile HttpApi instance;
+public class DataManager {
+    private static final String TAG = DataManager.class.getSimpleName();
+    private static volatile DataManager instance;
 
-    public static HttpApi getInstance() {
-        HttpApi localInstance = instance;
-        if (localInstance == null) {
-            synchronized (HttpApi.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new HttpApi();
-                }
-            }
+    private DataManager() {
+    }
+    
+    public static DataManager getInstance() {
+        if (instance == null) {
+            instance = new DataManager();
         }
-        return localInstance;
+        return instance;
     }
 
     public boolean isOnline(Context context) {

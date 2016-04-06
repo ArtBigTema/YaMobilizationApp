@@ -16,7 +16,7 @@ import java.util.List;
 
 import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.api.DownloadListener;
-import av.tesktask.yamobilizationapp.api.HttpApi;
+import av.tesktask.yamobilizationapp.api.DataManager;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
 import av.tesktask.yamobilizationapp.utils.Utils;
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(Constants.EXTRA_ARTISTS)) {
-                // Log.d(TAG, "Did select " + artist.getName());
                 onSuccess(Utils.parseArtists(savedInstanceState.getString(Constants.EXTRA_ARTISTS)));
             }
         }
@@ -84,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     private void execute() {
-        if (HttpApi.getInstance().isOnline(this)) {
+        if (DataManager.getInstance().isOnline(this)) {
             turnOnProgressBar();
-            HttpApi.getInstance().execute(this, getApplicationContext());
+            DataManager.getInstance().execute(this, getApplicationContext());
         } else {
-            if (HttpApi.getInstance().fileIsExist(this)) {
+            if (DataManager.getInstance().fileIsExist(this)) {
                 turnOnProgressBar();
-                onSuccess(HttpApi.getInstance().readFromFile(this));
+                onSuccess(DataManager.getInstance().readFromFile(this));
             } else {
                 showAlertDialogForActivateWIFI();
             }
@@ -113,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     public void onError(String message) {
         turnOffProgressBar();
 
-        if (HttpApi.getInstance().fileIsExist(this)) {
-            onSuccess(HttpApi.getInstance().readFromFile(this));
+        if (DataManager.getInstance().fileIsExist(this)) {
+            onSuccess(DataManager.getInstance().readFromFile(this));
         } else {
             showAlertDialogForReTryDownload(message);
         }

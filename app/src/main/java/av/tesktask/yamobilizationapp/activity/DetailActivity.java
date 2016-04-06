@@ -14,6 +14,7 @@ import av.tesktask.yamobilizationapp.models.Artist;
 
 import av.tesktask.yamobilizationapp.utils.Constants;
 import av.tesktask.yamobilizationapp.utils.Utils;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
