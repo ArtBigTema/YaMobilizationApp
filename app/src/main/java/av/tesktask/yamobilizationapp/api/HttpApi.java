@@ -4,11 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-
-import org.json.JSONException;
+import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
@@ -18,6 +17,7 @@ import av.tesktask.yamobilizationapp.utils.Utils;
  * Created by Artem on 01.04.2016.
  */
 public class HttpApi {//TODO rename
+    private static final String TAG = HttpApi.class.getSimpleName();
     private static volatile HttpApi instance;
 
     public static HttpApi getInstance() {
@@ -44,14 +44,14 @@ public class HttpApi {//TODO rename
         return FileController.fileIsExist(context);
     }
 
-    public ArrayList<Artist> readFromFile(Context context) {
+    public List<Artist> readFromFile(Context context) {
         try {
             return Utils.parseArtists(
                     FileController.readJsonFromFile(context).toString());
         } catch (IOException e) {
-            e.printStackTrace();//FIXME
+            Log.e(TAG, e.getMessage(), e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();//FIXME
+            Log.e(TAG, e.getMessage(), e);
         }
         return null;
     }

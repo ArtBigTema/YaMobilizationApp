@@ -2,6 +2,7 @@ package av.tesktask.yamobilizationapp.api;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import okhttp3.Response;
  * Created by Artem on 01.04.2016.
  */
 public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
+    private static final String TAG = DownloadAsyncTask.class.getSimpleName();
     private DownloadListener downloadListener;
     private Context context;
     private String errorMessage = "";
@@ -56,15 +58,16 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
 
                 parseArtists(json);
             } else {
+                Log.e(TAG, responses.message());
                 errorMessage = responses.message();
             }
         } catch (IOException e) {
             errorMessage = e.getMessage();
-            e.printStackTrace();//FIXME
+            Log.e(TAG, e.getMessage(), e);
             return null;
         } catch (ClassNotFoundException e) {
             errorMessage = e.getMessage();
-            e.printStackTrace();//FIXME
+            Log.e(TAG, e.getMessage(), e);
             return null;
         }
         return null;
