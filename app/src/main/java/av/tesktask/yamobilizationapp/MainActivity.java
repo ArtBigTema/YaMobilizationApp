@@ -17,17 +17,18 @@ import java.util.List;
 import av.tesktask.yamobilizationapp.api.DownloadListener;
 import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
+import av.tesktask.yamobilizationapp.utils.Constants;
+import av.tesktask.yamobilizationapp.utils.Utils;
 import av.tesktask.yamobilizationapp.view.ArtistRVAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
 public class MainActivity extends AppCompatActivity implements DownloadListener {
     private AlertDialog alertDialog;
 
     @Bind(R.id.rv_artists_list)
-    protected RecyclerView artistList;
+    protected RecyclerView recyclerView;
 
     @Bind(R.id.pb_list)
     protected ProgressBar progressBar;
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(Constants.EXTRA_ARTISTS)) {
+                onSuccess(Utils.parseArtists(savedInstanceState.getString(Constants.EXTRA_ARTISTS)));
+            }
+        }
         setToolbar();
     }
 
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     @Override
     protected void onStart() {
         super.onStart();
-        if (artistList.getVisibility() == View.GONE) {
+        if (recyclerView.getVisibility() == View.GONE) {
             execute();
         }
     }
@@ -63,6 +69,15 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     protected void onPause() {
         super.onPause();
         dismissAlertDialog();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        if (recyclerView.getVisibility() != View.GONE) {
+            savedInstanceState.putString(Constants.EXTRA_ARTISTS,
+                    Utils.getJson(((ArtistRVAdapter) recyclerView.getAdapter()).getList()));
+        }
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void execute() {
@@ -83,11 +98,11 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     public void onSuccess(List<Artist> artists) {
         turnOffProgressBar();
         dismissAlertDialog();
+
         if (artists != null) {//FIXME if size == 0
-            artistList.setVisibility(View.VISIBLE);
-            artistList.setAdapter(new ArtistRVAdapter(artists));
-            // artistList.addItemDecoration(new DividerItemDecoration(7));
-            artistList.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.setAdapter(new ArtistRVAdapter(artists));
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
