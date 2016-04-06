@@ -26,8 +26,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements DownloadListener {
-    private static final String TAG = MainActivity.class.getSimpleName();
     private AlertDialog alertDialog;
+    private boolean containsData = false;//true if recyclerView contain data
 
     @Bind(R.id.rv_artists_list)
     protected RecyclerView recyclerView;
@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        containsData = false;
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null) {//извлекаем сохраненные данные, если повернули экран
             if (savedInstanceState.containsKey(Constants.EXTRA_ARTISTS)) {
                 onSuccess(Utils.parseArtists(savedInstanceState.getString(Constants.EXTRA_ARTISTS)));
             }
@@ -60,11 +61,12 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (recyclerView.getVisibility() == View.GONE) {
-            execute();
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        if (containsData) {//Сохраняем данные, если есть, до поворота экрана
+            savedInstanceState.putString(Constants.EXTRA_ARTISTS,
+                    Utils.getJson(((ArtistRVAdapter) recyclerView.getAdapter()).getList()));
         }
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -74,12 +76,11 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        if (recyclerView.getVisibility() != View.GONE) {
-            savedInstanceState.putString(Constants.EXTRA_ARTISTS,
-                    Utils.getJson(((ArtistRVAdapter) recyclerView.getAdapter()).getList()));
+    protected void onStart() {
+        super.onStart();
+        if (!containsData) {
+            execute();
         }
-        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void execute() {
@@ -101,16 +102,20 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         turnOffProgressBar();
         dismissAlertDialog();
 
-        if (artists != null) {//FIXME if size == 0
+        if (artists != null && artists.size() > 0) {
+            containsData = true;
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(new ArtistRVAdapter(artists));
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            showAlertDialogForReTryDownload(getString(R.string.dialog_list_is_empty));
         }
     }
 
     @Override
     public void onError(String message) {
         turnOffProgressBar();
+        containsData = false;
 
         if (DataManager.getInstance().fileIsExist(this)) {
             onSuccess(DataManager.getInstance().readFromFile(this));
