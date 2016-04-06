@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import av.tesktask.yamobilizationapp.DetailActivity;
+import av.tesktask.yamobilizationapp.activity.DetailActivity;
 import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
 import av.tesktask.yamobilizationapp.R;

@@ -1,4 +1,4 @@
-package av.tesktask.yamobilizationapp;
+package av.tesktask.yamobilizationapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
 
 import av.tesktask.yamobilizationapp.utils.Constants;

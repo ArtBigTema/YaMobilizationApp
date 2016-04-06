@@ -1,4 +1,4 @@
-package av.tesktask.yamobilizationapp;
+package av.tesktask.yamobilizationapp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import java.util.List;
 
+import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.api.DownloadListener;
 import av.tesktask.yamobilizationapp.api.HttpApi;
 import av.tesktask.yamobilizationapp.models.Artist;
@@ -25,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements DownloadListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private AlertDialog alertDialog;
 
     @Bind(R.id.rv_artists_list)
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(Constants.EXTRA_ARTISTS)) {
+                // Log.d(TAG, "Did select " + artist.getName());
                 onSuccess(Utils.parseArtists(savedInstanceState.getString(Constants.EXTRA_ARTISTS)));
             }
         }
