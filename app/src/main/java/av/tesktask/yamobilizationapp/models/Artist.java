@@ -31,61 +31,110 @@ public class Artist implements Comparable<Artist> {
         this.cover = cover;
     }
 
+    /**
+     * Getter for Artist ID
+     * @return long id;
+     * */
     public long getId() {
         return id;
     }
 
+    /**
+     * Getter for Artist name
+     * @return String name;
+     * */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for Artist genres
+     * @return String genre;
+     * */
     public String getGenresSingleLine() {
         return Arrays.toString(genres).replaceAll("[\\[\\]]", "").trim();//FIXME if length == 0
     }
 
+    /**
+     * Checker for Artist genre
+     * @return boolean containGenre;
+     * */
     public boolean containsGenre(String genre) {
         return Arrays.asList(genres).contains(genre);
     }
 
+    /**
+     * Getter for Artist tracks
+     * @return int tracks;
+     * */
     public int getTracks() {
         return tracks;
     }
 
+    /**
+     * Getter for Artist albums
+     * @return int albums;
+     * */
     public int getAlbums() {
         return albums;
     }
 
+    /**
+     * Getter for Artist summary
+     * @param context appContext
+     * @param divider string divider
+     * @return String summary about Artist;
+     * */
     public String getSummary(Context context, String divider) {
-        StringBuilder s = new StringBuilder();
+        StringBuilder summary = new StringBuilder();
 
-        s.append(getAlbums());
-        s.append(" ");
-        s.append(context.getResources().getString(Utils.wordCorrector(getAlbums(),
+        summary.append(getAlbums());
+        summary.append(" ");
+        summary.append(context.getResources().getString(Utils.wordCorrector(getAlbums(),
                 R.string.artist_album_single, R.string.artist_album_few, R.string.artist_album_many)));
-        s.append(divider);
-        s.append(getTracks());
-        s.append(" ");
-        s.append(context.getResources().getString(Utils.wordCorrector(getTracks(),
+        summary.append(divider);
+        summary.append(getTracks());
+        summary.append(" ");
+        summary.append(context.getResources().getString(Utils.wordCorrector(getTracks(),
                 R.string.artist_song_single, R.string.artist_song_few, R.string.artist_song_many)));
-        return s.toString();
+        return summary.toString();
     }
 
+    /**
+     * Getter for Artist link
+     * @return String link;
+     * */
     public String getLink() {
         return link;
     }
 
+    /**
+     * Getter for Artist description
+     * @return String description;
+     * */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Getter for Artist smallCover
+     * @return String cover.small;
+     * */
     public String getSmallCover() {
         return cover.getSmallCover();
     }
 
+    /**
+     * Getter for Artist bigCover
+     * @return String cover.big;
+     * */
     public String getBigCover() {
         return cover.getBigCover();
     }
 
+    /**
+     * Method for Collection.sort()
+     * */
     @Override
     public int compareTo(Artist another) {
         return this.name.compareTo(another.name);

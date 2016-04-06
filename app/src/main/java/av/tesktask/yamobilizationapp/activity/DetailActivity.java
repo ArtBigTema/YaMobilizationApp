@@ -11,7 +11,6 @@ import com.squareup.picasso.Picasso;
 
 import av.tesktask.yamobilizationapp.R;
 import av.tesktask.yamobilizationapp.models.Artist;
-
 import av.tesktask.yamobilizationapp.utils.Constants;
 import av.tesktask.yamobilizationapp.utils.Utils;
 
@@ -43,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
         setToolbar();
 
         if (this.getIntent().getExtras() != null) {
+            //Извлекаем данные из Extras
             if (this.getIntent().getExtras().containsKey(Constants.EXTRA_DETAIL_ARTIST)) {
                 Artist artist = parseJson(getIntent().getExtras().getString(Constants.EXTRA_DETAIL_ARTIST));
                 setData(artist);

@@ -12,10 +12,18 @@ public class Cover {
         this.big = big;
     }
 
+    /**
+     * Getter for Artist smallCover
+     * @return String small;
+     * */
     public String getSmallCover() {
         return small;
     }
 
+    /**
+     * Getter for Artist bigCover
+     * @return String big;
+     * */
     public String getBigCover() {
         return big;
     }

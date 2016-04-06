@@ -3,10 +3,13 @@
 
     <string name="activity_main_name">Исполнители</string>
 
+
+    <!-- dividers -->
     <string name="divider_item_list_summary">, </string>
     <string name="divider_item_detail_summary">•</string>
     <string name="line_separator">line.separator</string>
 
+    <!-- dialog messages -->
     <string name="dialog_internet_is_off">Интернет выключен</string>
     <string name="dialog_retry_button">Попробовать ещё</string>
     <string name="dialog_negative_button">Отмена</string>
@@ -14,7 +17,9 @@
     <string name="dialog_internet_unavailable">Интернет не доступен</string>
     <string name="dialog_internet_and_file_unavailable">Первый запуск приложения требует интернет соединения</string>
     <string name="dialog_something">Что-то пошло не так, попробуйте заново</string>
+    <string name="dialog_list_is_empty">Список исполнителей пуст</string>
 
+    <!-- artist detail -->
     <string name="artist_album_many">альбомов</string>
     <string name="artist_album_few">альбома</string>
     <string name="artist_album_single">альбом</string>
