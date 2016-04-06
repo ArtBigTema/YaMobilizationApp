@@ -11,8 +11,6 @@ import av.tesktask.yamobilizationapp.utils.Utils;
  * Created by Artem on 31.03.2016.
  */
 public class Artist implements Comparable<Artist> {
-    private static String LOG_TAG = Artist.class.getName();
-
     private long id;
     private String name;
     private String[] genres;
@@ -98,9 +96,9 @@ public class Artist implements Comparable<Artist> {
         return "Artist{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                // ", genres=" + Arrays.toString(genres) +
-                // ", tracks=" + tracks +
-                // ", albums=" + albums +
+                ", genres=" + Arrays.toString(genres) +
+                ", tracks=" + tracks +
+                ", albums=" + albums +
                 ", link=" + link +
                 //  ", description=" + description +
                 ", bigCover='" + getBigCover() + '\'' +
