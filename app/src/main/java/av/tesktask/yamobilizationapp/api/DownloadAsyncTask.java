@@ -47,7 +47,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
         Request request = new Request.Builder()
                 .url(params[0])
                 .build();
-        Response responses = null;
+        Response responses;
 
         try {
             responses = client.newCall(request).execute();
