@@ -12,5 +12,8 @@ public class Constants {
 
     public static final String JSON_FILE = "artist.json";
 
-    public static final String FILTERED_BY_GENRE = "pop";
+    public static final String FILTERED_BY_GENRE_POP = "pop";
+
+    public static final String EXTRA_ARTISTS = "artist_list";
+    public static final String EXTRA_DETAIL_ARTIST = "artist_detail";
 }

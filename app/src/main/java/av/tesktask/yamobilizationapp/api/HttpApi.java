@@ -48,8 +48,6 @@ public class HttpApi {//TODO rename
         try {
             return Utils.parseArtists(
                     FileController.readJsonFromFile(context).toString());
-        } catch (JSONException e) {
-            e.printStackTrace();//FIXME
         } catch (IOException e) {
             e.printStackTrace();//FIXME
         } catch (ClassNotFoundException e) {

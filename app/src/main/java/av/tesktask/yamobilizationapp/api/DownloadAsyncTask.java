@@ -3,8 +3,6 @@ package av.tesktask.yamobilizationapp.api;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -73,12 +71,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
     }
 
     private void parseArtists(String json) {
-        try {
-            artists = Utils.parseArtists(json);
-        } catch (JSONException jsonError) {
-            errorMessage = jsonError.getMessage();
-            jsonError.printStackTrace();//TODO to log.d
-        }
+        artists = Utils.parseArtists(json);
     }
 
     @Override

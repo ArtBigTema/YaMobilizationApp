@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import av.tesktask.yamobilizationapp.models.Artist;
 import av.tesktask.yamobilizationapp.utils.Constants;
 import av.tesktask.yamobilizationapp.R;
 
+import av.tesktask.yamobilizationapp.utils.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -33,7 +33,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
 
     public ArtistRVAdapter(List<Artist> artistList) {
         // this.list = artistList;
-        list = filterByGenre(artistList, Constants.FILTERED_BY_GENRE);
+        list = filterByGenre(artistList, Constants.FILTERED_BY_GENRE_POP);
         //   Collections.sort(list);
     }
 
@@ -69,8 +69,8 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
         }
     }
 
-    public void updateData(List<Artist> newArtists) {
-        list = newArtists;
+    public List<Artist> getList() {
+        return list;
     }
 
     public static class ArtistsViewHolder extends RecyclerView.ViewHolder
@@ -125,7 +125,7 @@ public class ArtistRVAdapter extends RecyclerView.Adapter<ArtistRVAdapter.Artist
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), DetailActivity.class);
-            intent.putExtra(Artist.class.getName(), (new Gson()).toJson(artist));//TODO
+            intent.putExtra(Constants.EXTRA_DETAIL_ARTIST, Utils.getJson(artist));
             v.getContext().startActivity(intent);
         }
     }
