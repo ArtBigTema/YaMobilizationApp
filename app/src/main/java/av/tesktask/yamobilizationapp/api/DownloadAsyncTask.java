@@ -21,6 +21,7 @@ import okhttp3.Response;
  */
 public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
     private static final String TAG = DownloadAsyncTask.class.getSimpleName();
+
     private DownloadListener downloadListener;
     private Context context;
     private String errorMessage = "";
@@ -84,7 +85,7 @@ public class DownloadAsyncTask extends AsyncTask<String, Void, Void> {
             if (errorMessage.isEmpty()) {
                 downloadListener.onSuccess(artists);
             } else {
-                downloadListener.onError(errorMessage);//FIXME
+                downloadListener.onError(errorMessage);
             }
         }
     }
