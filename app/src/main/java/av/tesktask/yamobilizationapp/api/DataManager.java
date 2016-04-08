@@ -37,8 +37,8 @@ public class DataManager {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public boolean fileIsExist(Context context) {
-        return FileController.fileIsExist(context);
+    public boolean fileExist(Context context) {
+        return FileController.fileExist(context);
     }
 
     public List<Artist> readFromFile(Context context) {

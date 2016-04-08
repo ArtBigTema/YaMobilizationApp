@@ -17,7 +17,7 @@ import av.tesktask.yamobilizationapp.utils.Constants;
 public class FileController {
 
     public static void writeJsonToFileIfNeed(Context context, Object json) throws IOException, ClassNotFoundException {
-        if (!fileIsExist(context)) {//TODO single if
+        if (!fileExist(context)) {
             writeJsonToFile(context, json);
         } else {
             if (!compareJsonFile(context, json)) {
@@ -48,7 +48,7 @@ public class FileController {
         return object;
     }
 
-    public static boolean fileIsExist(Context context) {
+    public static boolean fileExist(Context context) {
         File file = context.getFileStreamPath(Constants.JSON_FILE);
         if (file == null || !file.exists()) {
             return false;

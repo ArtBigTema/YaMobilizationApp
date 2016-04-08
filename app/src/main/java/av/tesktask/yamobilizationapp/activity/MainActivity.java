@@ -45,12 +45,13 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         ButterKnife.bind(this);
         containsData = false;
 
+        setToolbar();
+
         if (savedInstanceState != null) {//извлекаем сохраненные данные, если повернули экран
             if (savedInstanceState.containsKey(Constants.EXTRA_ARTISTS)) {
                 onSuccess(Utils.parseArtists(savedInstanceState.getString(Constants.EXTRA_ARTISTS)));
             }
         }
-        setToolbar();
     }
 
     private void setToolbar() {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
             turnOnProgressBar();
             DataManager.getInstance().execute(this, getApplicationContext());
         } else {
-            if (DataManager.getInstance().fileIsExist(this)) {
+            if (DataManager.getInstance().fileExist(this)) {
                 turnOnProgressBar();
                 onSuccess(DataManager.getInstance().readFromFile(this));
             } else {
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements DownloadListener 
         turnOffProgressBar();
         containsData = false;
 
-        if (DataManager.getInstance().fileIsExist(this)) {
+        if (DataManager.getInstance().fileExist(this)) {
             onSuccess(DataManager.getInstance().readFromFile(this));
         } else {
             showAlertDialogForReTryDownload(message);

@@ -38,7 +38,7 @@ public class Utils {
 
     public static Artist parseArtist(String json) {
         try {
-            return new Gson().fromJson(json, Artist.class);//FIXME exception
+            return new Gson().fromJson(json, Artist.class);
         } catch (JsonSyntaxException e) {
             Log.e(TAG, e.getMessage(), e);
         }
