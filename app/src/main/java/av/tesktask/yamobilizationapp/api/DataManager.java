@@ -22,7 +22,7 @@ public class DataManager {
 
     private DataManager() {
     }
-    
+
     public static DataManager getInstance() {
         if (instance == null) {
             instance = new DataManager();
@@ -59,11 +59,11 @@ public class DataManager {
     }
 
     public String getUri() {
-        Uri.Builder builder = new Uri.Builder();//FIXME remove replace
-        builder.scheme(Constants.SCHEME.replaceAll(" \\+f", ""))
-                .authority(Constants.HOST.replaceAll(" \\+f", ""))
-                .appendPath(Constants.PATH.replaceAll(" \\+f", ""))
-                .appendPath(Constants.JSON.replaceAll(" \\+f", ""));
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(Constants.SCHEME)
+                .authority(Constants.HOST)
+                .appendPath(Constants.PATH)
+                .appendPath(Constants.JSON);
         return builder.build().toString();
     }
 }
